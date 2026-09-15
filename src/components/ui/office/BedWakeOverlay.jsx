@@ -57,7 +57,7 @@ export function BedWakeOverlay() {
           transition: "opacity 0.55s ease-out, transform 0.55s ease-out",
         }}
       >
-        You not RICH yet, Wake the fuck up
+        You are not RICH yet, Wake up
       </p>
     </div>
   );
