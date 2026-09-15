@@ -18,6 +18,15 @@ export function estimateIntervalUsd(dailyUsdPerPass, passesHeld, intervalHours =
 
 export const PAYOUT_HOURS_UTC = [0, 6, 12, 18];
 
+/** True once brandConfig.meta.contractAddress is a real mint, not "Soon". */
+export function isTokenLive(contractAddress = brandConfig.meta.contractAddress) {
+  const value = String(contractAddress ?? "").trim();
+  if (!value || /^soon$/i.test(value) || value.includes("PLACEHOLDER") || value.includes("YOUR_")) {
+    return false;
+  }
+  return value.length >= 32 && value.length <= 44;
+}
+
 /** Next 00/06/12/18 UTC payout instant. */
 export function getNextPayoutDate(now = new Date(), intervalHours = DISTRIBUTION_INTERVAL_HOURS) {
   const slotMs = intervalHours * 60 * 60 * 1000;

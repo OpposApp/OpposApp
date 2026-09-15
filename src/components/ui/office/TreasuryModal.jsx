@@ -10,6 +10,7 @@ import {
   formatDurationHms,
   formatUtcHm,
   getNextPayoutDate,
+  isTokenLive,
 } from "../../../lib/rewardsConfig.js";
 import { officeStore } from "../../../context/useOfficeStore";
 import { X, Landmark, Copy, Check, ExternalLink, Timer, Wallet, ShieldCheck } from "lucide-react";
@@ -39,6 +40,7 @@ export function TreasuryModal() {
   }, []);
 
   useEffect(() => {
+    if (!isTokenLive()) return;
     const id = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(id);
   }, []);
@@ -70,9 +72,10 @@ export function TreasuryModal() {
     };
   }, []);
 
-  const nextPayout = useMemo(() => getNextPayoutDate(now), [now]);
-  const remainingMs = Math.max(0, nextPayout.getTime() - now.getTime());
-  const nextHour = nextPayout.getUTCHours();
+  const tokenLive = isTokenLive();
+  const nextPayout = useMemo(() => (tokenLive ? getNextPayoutDate(now) : null), [now, tokenLive]);
+  const remainingMs = nextPayout ? Math.max(0, nextPayout.getTime() - now.getTime()) : 0;
+  const nextHour = nextPayout ? nextPayout.getUTCHours() : null;
   const treasury = config?.treasury_wallet;
   const treasuryReady = !isPlaceholderWallet(treasury);
 
@@ -126,17 +129,23 @@ export function TreasuryModal() {
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-5">
             <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-amber-400/80">
               <Timer className="h-3.5 w-3.5" />
-              Next scheduled slot
+              {tokenLive ? "Next scheduled slot" : "Awaiting token live"}
             </div>
             <p className="mt-3 font-mono text-4xl sm:text-5xl font-bold tracking-tight text-white tabular-nums">
-              {formatDurationHms(remainingMs)}
+              {tokenLive ? formatDurationHms(remainingMs) : "--:--:--"}
             </p>
             <p className="mt-2 text-xs text-white/50">
-              Schedule mark <span className="text-amber-300 font-mono">{formatUtcHm(nextPayout)}</span>
+              {tokenLive ? (
+                <>
+                  Schedule mark <span className="text-amber-300 font-mono">{formatUtcHm(nextPayout)}</span>
+                </>
+              ) : (
+                <>6-hour clock starts when $OPPOS is live</>
+              )}
             </p>
             <div className="mt-4 grid grid-cols-4 gap-1.5">
               {PAYOUT_HOURS_UTC.map((hour) => {
-                const active = hour === nextHour;
+                const active = tokenLive && hour === nextHour;
                 return (
                   <div
                     key={hour}
@@ -164,7 +173,10 @@ export function TreasuryModal() {
             </p>
             <p className="mt-2 text-xs text-white/50">SOL in treasury wallet</p>
             <p className="mt-4 text-[11px] leading-relaxed text-white/40">
-              {HOLDER_SPLIT_PERCENT}% of creator fees is reserved for Pass holders each cycle. The payout job is not live yet — this clock shows the 00/06/12/18 UTC schedule.
+              {HOLDER_SPLIT_PERCENT}% of creator fees is reserved for Pass holders each cycle.{" "}
+              {tokenLive
+                ? "The payout job is not live yet — this clock tracks 00/06/12/18 UTC."
+                : "Countdown starts when $OPPOS goes live on pump.fun."}
             </p>
           </div>
         </div>
