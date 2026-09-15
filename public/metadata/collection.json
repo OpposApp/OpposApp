@@ -1,0 +1,16 @@
+{
+  "name": "Oppos Pass",
+  "symbol": "OPPOS",
+  "description": "Oppos Pass collection on Solana. Max supply 2,222. Revenue-share Pass NFTs for $OPPOS creator fees.",
+  "image": "https://gateway.irys.xyz/F6EPYnRusCSGcMHztd2M9GkPdHpEYfCW5Hq6UpPPbKFb",
+  "external_url": "https://oppos.app",
+  "properties": {
+    "files": [
+      {
+        "uri": "https://gateway.irys.xyz/F6EPYnRusCSGcMHztd2M9GkPdHpEYfCW5Hq6UpPPbKFb",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "OPPOS Pass",
+  "symbol": "OPPOS",
+  "description": "Oppos Pass — 1 of 2,222. Holding a Pass is designed to receive an equal share of 50% of $OPPOS creator fees in SOL.",
+  "image": "https://gateway.irys.xyz/F6EPYnRusCSGcMHztd2M9GkPdHpEYfCW5Hq6UpPPbKFb",
+  "external_url": "https://oppos.app",
+  "attributes": [
+    {
+      "trait_type": "Collection",
+      "value": "Oppos Pass"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "2222"
+    },
+    {
+      "trait_type": "Holder Split",
+      "value": "50%"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://gateway.irys.xyz/F6EPYnRusCSGcMHztd2M9GkPdHpEYfCW5Hq6UpPPbKFb",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}

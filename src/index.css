@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body:not(.studio-mode) * {
+    cursor: none !important;
+  }
+
+  body.studio-mode {
+    cursor: default;
+  }
+
+  body.studio-mode button,
+  body.studio-mode a,
+  body.studio-mode [role="button"],
+  body.studio-mode .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply min-h-screen bg-black text-white;
+    font-family: 'STIX Two Text', Georgia, serif;
+  }
+
+  ::selection {
+    @apply bg-white/20 text-white;
+  }
+
+  /* ── Theme scrollbars (dark editorial) ── */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.28);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  #scroll-container {
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.03);
+  }
+
+  #scroll-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+@layer components {
+  /* ── Noise / Grain Overlay ── */
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    mix-blend-mode: overlay;
+  }
+
+  /* ── Page Shell ── */
+  .page-shell {
+    @apply relative mx-auto flex min-h-screen max-w-6xl flex-col px-6 pb-20 pt-6 sm:px-10;
+  }
+
+  /* ── Cards (Minimal / Shader.se style) ── */
+  .card {
+    @apply relative p-6 sm:p-8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .card-bordered {
+    @apply relative overflow-hidden rounded-none border border-white/10 p-6 sm:p-8 transition-all duration-300;
+  }
+
+  .card-bordered:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ── Buttons (Shader.se minimal) ── */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-none border border-white/30 bg-transparent px-8 py-4 font-serif text-sm font-medium text-white transition-all duration-300;
+  }
+
+  .btn-primary:hover {
+    @apply bg-white text-black;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-30 cursor-not-allowed;
+  }
+
+  .btn-primary:disabled:hover {
+    @apply bg-transparent text-white;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 border-b border-white/20 bg-transparent px-1 py-1 font-serif text-sm text-white/60 transition-all duration-200;
+  }
+
+  .btn-ghost:hover {
+    @apply text-white border-white/60;
+  }
+
+  /* ── Typography ── */
+  .text-gradient {
+    @apply bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-indigo-400 via-purple-300 to-white bg-clip-text text-transparent;
+  }
+
+  /* ── Stats ── */
+  .stat-label {
+    @apply text-xs font-mono uppercase tracking-wider text-white/40;
+  }
+
+  .stat-value {
+    @apply mt-2 font-serif text-2xl font-bold tracking-tight text-white sm:text-3xl;
+  }
+
+  /* ── Nav Links (Shader.se floating style) ── */
+  .nav-link {
+    @apply whitespace-nowrap px-3 py-1.5 font-serif text-sm transition-all duration-200;
+  }
+
+  .nav-link-active {
+    @apply text-white;
+  }
+
+  .nav-link-idle {
+    @apply text-white/40 hover:text-white;
+  }
+
+  /* ── Section Title ── */
+  .section-title {
+    @apply font-serif text-xl font-bold tracking-tight text-white sm:text-2xl;
+  }
+
+  /* ── Row Item ── */
+  .row-item {
+    @apply flex items-center justify-between gap-3 py-5 last:border-0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ── Badge (Minimal) ── */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-0 py-0 font-mono text-xs font-medium text-white/40 uppercase tracking-widest;
+  }
+}

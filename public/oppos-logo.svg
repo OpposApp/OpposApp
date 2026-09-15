@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" fill="none">
+  <rect width="1080" height="1080" fill="#09090b"/>
+
+  <defs>
+    <radialGradient id="feather" cx="42%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="55%" stop-color="#d6dde6"/>
+      <stop offset="100%" stop-color="#9aa6b4"/>
+    </radialGradient>
+    <radialGradient id="sclera" cx="38%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="72%" stop-color="#f4f7fb"/>
+      <stop offset="100%" stop-color="#c9d3de"/>
+    </radialGradient>
+    <radialGradient id="iris" cx="38%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="42%" stop-color="#3b82f6"/>
+      <stop offset="78%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </radialGradient>
+    <radialGradient id="pupil" cx="40%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+    <radialGradient id="beak" cx="50%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="45%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </radialGradient>
+    <filter id="soft" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+
+    <g id="owl-eye">
+      <ellipse cy="8" rx="86" ry="84" fill="url(#feather)"/>
+      <ellipse cy="-62" rx="58" ry="16" fill="#b8c0cb"/>
+      <ellipse cy="-58" rx="50" ry="10" fill="#8b96a3"/>
+      <ellipse cy="4" rx="70" ry="68" fill="url(#sclera)"/>
+      <ellipse cx="-18" cy="-18" rx="22" ry="12" fill="#ffffff" opacity="0.55"/>
+      <circle cy="8" r="32" fill="url(#iris)"/>
+      <circle cy="8" r="32" fill="none" stroke="#1e3a8a" stroke-width="2" opacity="0.4"/>
+      <circle cy="9" r="14" fill="url(#pupil)"/>
+      <circle cx="-8" cy="-2" r="6.5" fill="#ffffff"/>
+      <circle cx="8" cy="12" r="3.2" fill="#ffffff" opacity="0.9"/>
+      <path d="M0 58 L-11 78 Q0 86 11 78 Z" fill="url(#beak)"/>
+    </g>
+  </defs>
+
+  <g filter="url(#soft)" transform="translate(540 530)">
+    <use href="#owl-eye" x="-250" y="0"/>
+    <text x="-88" y="28" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="168"
+          fill="#6366f1" stroke="#f59e0b" stroke-width="10" paint-order="stroke fill" stroke-linejoin="round">P</text>
+    <text x="42" y="28" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="168"
+          fill="#6366f1" stroke="#f59e0b" stroke-width="10" paint-order="stroke fill" stroke-linejoin="round">P</text>
+    <use href="#owl-eye" x="172" y="0"/>
+    <text x="334" y="28" text-anchor="middle" font-family="Fredoka One, sans-serif" font-size="168"
+          fill="#6366f1" stroke="#f59e0b" stroke-width="10" paint-order="stroke fill" stroke-linejoin="round">S</text>
+  </g>
+</svg>

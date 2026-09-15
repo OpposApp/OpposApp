@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" fill="none">
+  <rect width="1080" height="1080" fill="#09090b"/>
+
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <radialGradient id="face-feather" cx="50%" cy="40%" r="58%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="45%" stop-color="#e2e8f0"/>
+      <stop offset="78%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </radialGradient>
+    <radialGradient id="sclera" cx="48%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="85%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </radialGradient>
+    <radialGradient id="iris" cx="36%" cy="30%" r="62%">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="35%" stop-color="#38bdf8"/>
+      <stop offset="70%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </radialGradient>
+    <radialGradient id="pupil" cx="40%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+    <linearGradient id="brow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="beak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fdba74"/>
+      <stop offset="45%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+    <filter id="ground-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="28" stdDeviation="18" flood-color="#000000" flood-opacity="0.65"/>
+    </filter>
+    <g id="bird-eye-front">
+      <circle r="104" fill="url(#face-feather)" stroke="#f59e0b" stroke-width="9"/>
+      <path d="M-68 -42 C-34 -62 34 -62 68 -42 C34 -28 0 -26 -34 -28 Z" fill="url(#brow)"/>
+      <circle cy="8" r="60" fill="url(#sclera)"/>
+      <path d="M-58 -2 Q0 -18 58 -2 Q0 22 58 38 L58 8 Q0 -8 -58 8 Z" fill="#64748b" opacity="0.14"/>
+      <circle cy="12" r="36" fill="url(#iris)"/>
+      <circle cy="14" r="16" fill="url(#pupil)"/>
+      <ellipse cx="-10" cy="5" rx="8" ry="7" fill="#ffffff" opacity="0.95"/>
+      <circle cx="12" cy="18" r="4" fill="#ffffff" opacity="0.85"/>
+      <path d="M0 46 C-8 52 -12 62 -14 70 L0 78 L14 70 C12 62 8 52 0 46 Z" fill="url(#beak)"/>
+    </g>
+    <g id="bird-eye-side">
+      <circle r="104" fill="#64748b"/>
+      <circle cy="12" r="34" fill="#1d4ed8"/>
+      <circle cy="14" r="16" fill="#020617"/>
+    </g>
+  </defs>
+
+  <g transform="translate(540 560)" filter="url(#ground-shadow)" text-anchor="middle" dominant-baseline="central">
+    <g transform="translate(12 16)" opacity="0.4">
+      <path d="M -343 118 Q 27 148 427 125" stroke="#78350f" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <use href="#bird-eye-side" transform="translate(-290 -6)"/>
+      <text x="-110" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#312e81">P</text>
+      <text x="38" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#312e81">P</text>
+      <use href="#bird-eye-side" transform="translate(218 -6)"/>
+      <text x="388" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#312e81">S</text>
+    </g>
+    <g transform="translate(7 10)" opacity="0.55">
+      <use href="#bird-eye-side" transform="translate(-290 -6)"/>
+      <text x="-110" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#4338ca">P</text>
+      <text x="38" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#4338ca">P</text>
+      <use href="#bird-eye-side" transform="translate(218 -6)"/>
+      <text x="388" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#4338ca">S</text>
+    </g>
+    <g transform="translate(3 5)" opacity="0.75">
+      <use href="#bird-eye-side" transform="translate(-290 -6)"/>
+      <text x="-110" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#4f46e5">P</text>
+      <text x="38" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#4f46e5">P</text>
+      <use href="#bird-eye-side" transform="translate(218 -6)"/>
+      <text x="388" y="4" font-family="Fredoka One, sans-serif" font-size="200" fill="#4f46e5">S</text>
+    </g>
+
+    <path d="M -355 118 Q 15 148 415 125" stroke="#f59e0b" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <use href="#bird-eye-front" transform="translate(-290 -6)"/>
+    <text x="-110" y="4" font-family="Fredoka One, sans-serif" font-size="200" font-weight="400"
+          fill="url(#face)" stroke="#f59e0b" stroke-width="12" paint-order="stroke fill" stroke-linejoin="round">P</text>
+    <text x="38" y="4" font-family="Fredoka One, sans-serif" font-size="200" font-weight="400"
+          fill="url(#face)" stroke="#f59e0b" stroke-width="12" paint-order="stroke fill" stroke-linejoin="round">P</text>
+    <use href="#bird-eye-front" transform="translate(218 -6)"/>
+    <text x="388" y="4" font-family="Fredoka One, sans-serif" font-size="200" font-weight="400"
+          fill="url(#face)" stroke="#f59e0b" stroke-width="12" paint-order="stroke fill" stroke-linejoin="round">S</text>
+  </g>
+</svg>
