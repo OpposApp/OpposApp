@@ -7,7 +7,7 @@ loadEnvFiles();
  *
  * Requires:
  *   MINT_AUTHORITY_SECRET  — base58-encoded 64-byte secret key
- *   SOLANA_RPC_URL or HELIUS_RPC_URL or VITE_HELIUS_RPC_URL
+ *   SOLANA_RPC_URL or HELIUS_RPC_URL (never VITE_ for paid keys)
  *   TOKEN_MINT             — $OPPOS SPL mint (must exist; user ATAs need balance to mint)
  *   TREASURY_WALLET        — receives 0.2 SOL per mint
  *

@@ -126,13 +126,13 @@ export function TreasuryModal() {
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.06] p-5">
             <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-amber-400/80">
               <Timer className="h-3.5 w-3.5" />
-              Next payout
+              Next scheduled slot
             </div>
             <p className="mt-3 font-mono text-4xl sm:text-5xl font-bold tracking-tight text-white tabular-nums">
               {formatDurationHms(remainingMs)}
             </p>
             <p className="mt-2 text-xs text-white/50">
-              Drops at <span className="text-amber-300 font-mono">{formatUtcHm(nextPayout)}</span>
+              Schedule mark <span className="text-amber-300 font-mono">{formatUtcHm(nextPayout)}</span>
             </p>
             <div className="mt-4 grid grid-cols-4 gap-1.5">
               {PAYOUT_HOURS_UTC.map((hour) => {

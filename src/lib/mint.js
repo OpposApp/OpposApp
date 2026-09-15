@@ -67,6 +67,11 @@ export async function mintPassFromCandyMachine({ wallet, config }) {
     ? publicKey(config.candy_guard)
     : candyMachine.mintAuthority;
   const candyGuard = await safeFetchCandyGuard(umi, guardPk);
+  if (!candyGuard) {
+    throw new Error(
+      "Candy Guard not found at the configured address — mint would skip 0.2 SOL + burn. Update project_config.candy_guard.",
+    );
+  }
 
   if (candyMachine.itemsRedeemed >= candyMachine.itemsAvailable) {
     throw new Error("Sold out — all Passes have been minted");

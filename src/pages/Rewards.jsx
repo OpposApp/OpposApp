@@ -7,7 +7,7 @@ import { StatusBadge } from "../components/ui/StatusBadge.jsx";
 import { EmptyState } from "../components/ui/EmptyState.jsx";
 import { Skeleton } from "../components/ui/Skeleton.jsx";
 import { EarningsCalculator } from "../components/ui/EarningsCalculator.jsx";
-import { PAYOUT_DESCRIPTION, PAYOUT_LABEL, PAYOUT_SHORT } from "../lib/rewardsConfig.js";
+import { PAYOUT_DESCRIPTION, PAYOUT_LABEL } from "../lib/rewardsConfig.js";
 
 export function RewardsPage() {
   const [config, setConfig] = useState(null);
@@ -68,7 +68,7 @@ export function RewardsPage() {
       {!loading && rows.length === 0 && !error && (
         <EmptyState
           title="No Payout History Yet"
-          description={`The first on-chain payout round will run ${PAYOUT_SHORT} once launch volume is live.`}
+          description={`The payout job is not live yet. History fills when 00/06/12/18 UTC cycles start sending SOL.`}
         />
       )}
 

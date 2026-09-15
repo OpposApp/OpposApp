@@ -32,7 +32,6 @@ export function getRpcUrl() {
   return (
     process.env.SOLANA_RPC_URL ||
     process.env.HELIUS_RPC_URL ||
-    process.env.VITE_HELIUS_RPC_URL ||
     "https://api.devnet.solana.com"
   );
 }

@@ -158,6 +158,14 @@ export function Layout() {
                   >
                     X (Twitter)
                   </a>
+                  <a
+                    href={brandConfig.meta.socials.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-serif text-sm text-white/50 hover:text-white transition-colors"
+                  >
+                    GitHub
+                  </a>
                   <p className="font-serif text-sm text-white/50">
                     Contract Address{" "}
                     <span className="font-mono text-white/70">{brandConfig.meta.contractAddress}</span>

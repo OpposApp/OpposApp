@@ -8,7 +8,7 @@ export const brandConfig = {
     subtitle: "First-Person 3D Virtual Workspace",
     socials: {
       twitter: "https://x.com/OpposApp",
-      github: "https://github.com/oppos",
+      github: "https://github.com/OpposApp/OpposApp",
       email: "hello@oppos.app",
     },
     contractAddress: "Soon",
@@ -97,10 +97,10 @@ export async function distributeFeePool(poolAddress) {
   const connection = new Connection("https://api.mainnet-beta.solana.com");
   const poolBalance = await connection.getBalance(new PublicKey(poolAddress));
   
-  // 50% split → Pass Holders every 6 hours (00/06/12/18 UTC)
+  // 50% split → Pass Holders on a designed 6-hour clock (00/06/12/18 UTC)
   const holderShare = poolBalance * 0.5;
-  console.log(\`[OPPOS] 6h cycle: disbursing \${holderShare / 1e9} SOL to verified holders.\`);
-  return { status: "EXECUTED", amountSol: holderShare / 1e9 };
+  console.log(\`[OPPOS] 6h cycle (not live): would disburse \${holderShare / 1e9} SOL to verified holders.\`);
+  return { status: "SCHEDULED", amountSol: holderShare / 1e9 };
 }`,
       quickLinks: [
         { label: "Solana RPC Health", url: "https://status.solana.com", external: true },
@@ -165,7 +165,7 @@ export async function distributeFeePool(poolAddress) {
           status: "In Progress",
           revenue: "Next",
           date: "Phase 3",
-          description: "Mint indexer writes Passes to Supabase. Holder snapshots + payout history follow when the payout job ships.",
+          description: "Mint indexer writes Passes to Supabase when the watch process is running. Holder snapshots + payout history follow when the payout job ships.",
         },
       ],
     },

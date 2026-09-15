@@ -15,6 +15,12 @@ const BASE_LINKS = [
     desc: "Announcements & updates",
   },
   {
+    label: "GitHub",
+    href: brandConfig.meta.socials.github,
+    external: true,
+    desc: "Public protocol source",
+  },
+  {
     label: "Contract Address",
     href: null,
     value: brandConfig.meta.contractAddress,

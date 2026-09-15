@@ -216,12 +216,21 @@ async function runOnce() {
   let newestSlot = stateRow?.last_slot ?? null;
 
   for (const info of chronological) {
-    newestSig = info.signature;
-    newestSlot = info.slot ?? newestSlot;
-    if (usedTx.has(info.signature)) continue;
+    if (usedTx.has(info.signature)) {
+      newestSig = info.signature;
+      newestSlot = info.slot ?? newestSlot;
+      continue;
+    }
 
     const tx = await fetchTx(connection, info.signature);
-    if (!tx || tx.meta?.err) continue;
+    if (!tx) {
+      // RPC lag: do not advance the cursor past an unread mint.
+      break;
+    }
+
+    newestSig = info.signature;
+    newestSlot = info.slot ?? newestSlot;
+    if (tx.meta?.err) continue;
     const parsed = parseCandyMint(tx);
     if (!parsed) continue;
     if (byAsset.has(parsed.asset)) continue;

@@ -17,7 +17,7 @@ const projects = [
     title: "On-Chain Fee Indexer",
     subtitle: "Helius DAS & Supabase",
     description:
-      "Indexing pipeline (Helius DAS + Supabase) for creator-fee snapshots. 6-hour cadence is designed; the production indexer is not live yet.",
+      "Mint indexer writes Passes to Supabase. Holder snapshots on a 6-hour clock are designed; the payout job is not live yet.",
     stats: { payout: "6h SOL", audit: "Solscan Hash" },
   },
   {

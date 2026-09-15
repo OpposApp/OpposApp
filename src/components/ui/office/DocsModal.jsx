@@ -20,13 +20,13 @@ const sections = [
   },
   {
     title: "SOL Revenue Distribution",
-    eyebrow: `${DISTRIBUTION_INTERVAL_HOURS}-Hour Automated Payouts`,
-    intro: `Designed cadence: Pass holders are indexed every ${DISTRIBUTION_INTERVAL_HOURS} hours, splitting creator fees:`,
+    eyebrow: `Designed ${DISTRIBUTION_INTERVAL_HOURS}-Hour Payouts`,
+    intro: `Designed cadence: Pass holders are snapshotted every ${DISTRIBUTION_INTERVAL_HOURS} hours, splitting creator fees:`,
     items: [
       "50% → Pass Holders (SOL airdropped directly, 1 Pass = 1 Share)",
       "20% → Developer & Core Team",
       "30% → Operations, High-Speed RPC, and Database Infrastructure",
-      `Payout clock: ${PAYOUT_SCHEDULE_UTC} — no manual claim required`,
+      `Payout clock: ${PAYOUT_SCHEDULE_UTC} — no claim UI once the payout job is live`,
     ],
     note: "* Designed split. Yield depends on trading volume, not a fixed APY. The automated payout job is not live yet.",
   },
@@ -82,11 +82,11 @@ export function DocsModal() {
               <div className="flex items-center gap-2">
                 <h2 className="font-serif text-xl font-bold tracking-tight">Protocol Documentation</h2>
                 <span className="rounded-full bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 text-[10px] font-mono text-sky-400">
-                  v2.4 SPEC
+                  DOCS
                 </span>
               </div>
               <p className="text-xs text-white/50 mt-0.5">
-                Architecture, Smart Contract Mechanics, and Tokenomics
+                Architecture and tokenomics
               </p>
             </div>
           </div>

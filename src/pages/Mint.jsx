@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchProjectConfig } from "../lib/supabase";
-import { fetchMintedSupply, fetchWalletPasses } from "../lib/passes.js";
+import { fetchMintedSupply, fetchWalletPasses, waitForIndexedSupply } from "../lib/passes.js";
 import { getMintReadiness, mintPass, solscanAccount, solscanTx } from "../lib/solana";
 import { getMintCostLabels } from "../lib/mintConfig.js";
 import { useSolanaWallet } from "../hooks/useSolanaWallet.js";
@@ -59,12 +59,28 @@ export function MintPage() {
     try {
       const sig = await mintPass({ wallet, config });
       setTxSignature(sig);
-      const newCount = await fetchMintedSupply(config);
-      setMinted(newCount);
+      const optimistic = Math.min(minted + 1, maxSupply);
+      setMinted(optimistic);
       if (publicKey) {
-        const passes = await fetchWalletPasses(publicKey.toBase58(), config);
-        setMyPasses(passes);
+        setMyPasses((prev) => {
+          if (prev.some((p) => p.mint_tx === sig)) return prev;
+          return [
+            ...prev,
+            {
+              serial: "…",
+              asset_address: `pending:${sig}`,
+              mint_tx: sig,
+              minted_at: new Date().toISOString(),
+            },
+          ];
+        });
       }
+      void waitForIndexedSupply(optimistic).then(async (indexed) => {
+        setMinted((n) => Math.max(n, indexed));
+        if (!publicKey) return;
+        const passes = await fetchWalletPasses(publicKey.toBase58());
+        if (passes.length) setMyPasses(passes);
+      });
     } catch (e) {
       setError(e.message);
     } finally {
@@ -231,7 +247,9 @@ export function MintPage() {
                     className="flex items-center justify-between border border-white/[0.08] p-4"
                   >
                     <div>
-                      <p className="font-mono text-xs font-bold text-white">Pass #{p.serial}</p>
+                      <p className="font-mono text-xs font-bold text-white">
+                        {p.asset_address?.startsWith("pending:") ? "Pass indexing…" : `Pass #${p.serial}`}
+                      </p>
                       {p.minted_at && (
                         <p className="text-[10px] text-white/20 font-mono">
                           {new Date(p.minted_at).toLocaleDateString()}

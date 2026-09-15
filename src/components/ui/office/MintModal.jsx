@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchProjectConfig } from "../../../lib/supabase";
-import { fetchMintedSupply, fetchWalletPasses } from "../../../lib/passes.js";
+import { fetchMintedSupply, fetchWalletPasses, waitForIndexedSupply } from "../../../lib/passes.js";
 import { getMintReadiness, mintPass, solscanTx } from "../../../lib/solana";
 import { getMintCostLabels } from "../../../lib/mintConfig.js";
 import { useSolanaWallet } from "../../../hooks/useSolanaWallet.js";
@@ -64,13 +64,28 @@ export function MintModal() {
     try {
       const sig = await mintPass({ wallet, config });
       setTxSignature(sig);
-      // Refresh count
-      const newCount = await fetchMintedSupply(config);
-      setMinted(newCount);
+      const optimistic = Math.min(minted + 1, maxSupply);
+      setMinted(optimistic);
       if (publicKey) {
-        const passes = await fetchWalletPasses(publicKey.toBase58(), config);
-        setMyPasses(passes);
+        setMyPasses((prev) => {
+          if (prev.some((p) => p.mint_tx === sig)) return prev;
+          return [
+            ...prev,
+            {
+              serial: "…",
+              asset_address: `pending:${sig}`,
+              mint_tx: sig,
+              minted_at: new Date().toISOString(),
+            },
+          ];
+        });
       }
+      void waitForIndexedSupply(optimistic).then(async (indexed) => {
+        setMinted((n) => Math.max(n, indexed));
+        if (!publicKey) return;
+        const passes = await fetchWalletPasses(publicKey.toBase58());
+        if (passes.length) setMyPasses(passes);
+      });
     } catch (e) {
       setError(e.message);
     } finally {
@@ -132,7 +147,7 @@ export function MintModal() {
                 </div>
                 {myPasses.length > 0 && (
                   <p className="text-[11px] text-emerald-400">
-                    ✓ Eligible for {myPasses.length} share(s) of 50% creator fee pool.
+                    ✓ {myPasses.length} share(s) of the 50% holder pool once the payout job is live.
                   </p>
                 )}
               </div>
