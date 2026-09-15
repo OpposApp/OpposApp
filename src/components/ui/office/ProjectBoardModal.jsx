@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { brandConfig } from "../../../config/brandConfig";
 import { officeStore } from "../../../context/useOfficeStore";
-import { StickyNoteBoard } from "./StickyNote.jsx";
+import { LaunchContactSheet } from "./LaunchContactSheet.jsx";
 import { X, Map, ArrowRight } from "lucide-react";
 
 export function ProjectBoardModal() {
@@ -41,7 +41,7 @@ export function ProjectBoardModal() {
         </div>
 
         <div className="mt-6">
-          <StickyNoteBoard projects={board.projects} />
+          <LaunchContactSheet projects={board.projects} />
         </div>
 
         {/* Bottom Callout */}

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { NormieFaq } from "../NormieFaq.jsx";
 import { brandConfig } from "../../../config/brandConfig";
 import { officeStore } from "../../../context/useOfficeStore";
-import { StickyNoteBoard } from "./StickyNote.jsx";
+import { LaunchContactSheet } from "./LaunchContactSheet.jsx";
 import { X, Info, Globe } from "lucide-react";
 
 export function AboutModal() {
@@ -64,9 +64,9 @@ export function AboutModal() {
           <div className="space-y-4">
             <div className="flex items-end justify-between gap-3">
               <h3 className="font-serif text-lg font-bold text-white">Launch Roadmap</h3>
-              <span className="font-serif text-xs italic text-white/40">pinned to the wall</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">six frames</span>
             </div>
-            <StickyNoteBoard projects={board.projects} />
+            <LaunchContactSheet projects={board.projects} />
           </div>
 
           {/* Interactive FAQ Section */}
