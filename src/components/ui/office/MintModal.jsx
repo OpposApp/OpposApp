@@ -216,7 +216,7 @@ export function MintModal() {
                   <p className="text-xs text-white/70 text-center">
                     Connect your Solana wallet to proceed with Pass minting
                   </p>
-                  <ConnectButton />
+                  <ConnectButton variant="cta" />
                 </div>
               ) : (
                 <button

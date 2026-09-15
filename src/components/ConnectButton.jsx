@@ -1,7 +1,7 @@
 import { isPrivyConfigured } from "../lib/env.js";
 import { ConnectButtonPrivy } from "./ConnectButtonPrivy.jsx";
 
-export function ConnectButton() {
+export function ConnectButton({ variant = "inline" }) {
   if (!isPrivyConfigured) {
     return (
       <span
@@ -13,5 +13,5 @@ export function ConnectButton() {
     );
   }
 
-  return <ConnectButtonPrivy />;
+  return <ConnectButtonPrivy variant={variant} />;
 }

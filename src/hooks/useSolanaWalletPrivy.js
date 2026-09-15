@@ -7,7 +7,7 @@ import { toLegacyWalletAdapter } from "../lib/solanaWalletAdapter.js";
 
 export function useSolanaWalletPrivy() {
   const { ready: privyReady } = usePrivy();
-  const { wallets, ready: walletsReady } = useWallets();
+  const { wallets } = useWallets();
 
   const connection = useMemo(() => new Connection(SOLANA_RPC, "confirmed"), []);
   const solanaWallet = wallets[0] ?? null;
@@ -33,7 +33,7 @@ export function useSolanaWalletPrivy() {
     wallet,
     publicKey,
     connected: !!publicKey,
-    ready: privyReady && walletsReady,
+    ready: privyReady,
     solanaWallet,
   };
 }

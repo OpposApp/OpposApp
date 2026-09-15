@@ -1,4 +1,4 @@
-import { isDevnetRpc, SOLANA_RPC } from "./env.js";
+import { isDevnetRpc, SOLANA_RPC_CANDIDATES } from "./env.js";
 
 const LAMPORTS_PER_SOL = 1_000_000_000n;
 const SOLSCAN_CLUSTER = isDevnetRpc ? "?cluster=devnet" : "";
@@ -25,24 +25,36 @@ export function solscanToken(mint) {
 
 export async function fetchSolBalanceLamports(pubkey) {
   if (!pubkey) return 0;
-  const res = await fetch(SOLANA_RPC, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      id: 1,
-      method: "getBalance",
-      params: [pubkey, { commitment: "confirmed" }],
-    }),
+  const body = JSON.stringify({
+    jsonrpc: "2.0",
+    id: 1,
+    method: "getBalance",
+    params: [pubkey, { commitment: "confirmed" }],
   });
-  if (!res.ok) {
-    throw new Error(`RPC ${res.status}`);
+
+  let lastError = new Error("RPC unavailable");
+  for (const endpoint of SOLANA_RPC_CANDIDATES) {
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+      });
+      if (!res.ok) {
+        lastError = new Error(`RPC ${res.status}`);
+        continue;
+      }
+      const json = await res.json();
+      if (json.error) {
+        lastError = new Error(json.error.message || "getBalance failed");
+        continue;
+      }
+      return json.result?.value ?? 0;
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error("RPC request failed");
+    }
   }
-  const json = await res.json();
-  if (json.error) {
-    throw new Error(json.error.message || "getBalance failed");
-  }
-  return json.result?.value ?? 0;
+  throw lastError;
 }
 
 export function formatBurnAmount(raw, decimals = 6) {
