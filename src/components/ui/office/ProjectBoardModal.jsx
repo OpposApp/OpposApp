@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { brandConfig } from "../../../config/brandConfig";
 import { officeStore } from "../../../context/useOfficeStore";
+import { StickyNoteBoard } from "./StickyNote.jsx";
 import { X, Map, ArrowRight } from "lucide-react";
 
 export function ProjectBoardModal() {
@@ -39,28 +40,8 @@ export function ProjectBoardModal() {
           </button>
         </div>
 
-        {/* Project Cards Grid */}
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {board.projects.map((project) => (
-            <div
-              key={project.id}
-              className="flex flex-col justify-between rounded-lg border border-white/10 bg-white/[0.02] p-5 hover:border-purple-500/40 hover:bg-purple-500/[0.03] transition-all"
-            >
-              <div>
-                <div className="flex items-center justify-between text-[11px] font-mono text-white/40 mb-2">
-                  <span>{project.date}</span>
-                  <span className="text-emerald-400 font-semibold">{project.revenue}</span>
-                </div>
-                <h4 className="font-serif text-base font-bold text-white mb-1.5">{project.name}</h4>
-                <p className="text-xs text-purple-300 font-mono mb-2">{project.category}</p>
-                <p className="text-xs text-white/60 leading-relaxed">{project.description}</p>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-emerald-400 font-mono">
-                <span>● {project.status}</span>
-              </div>
-            </div>
-          ))}
+        <div className="mt-6">
+          <StickyNoteBoard projects={board.projects} />
         </div>
 
         {/* Bottom Callout */}

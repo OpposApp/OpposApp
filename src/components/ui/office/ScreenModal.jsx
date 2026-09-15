@@ -47,8 +47,8 @@ export function ScreenModal() {
   };
 
   return (
-    <div className="pointer-events-auto fixed inset-0 z-[60] flex items-end justify-center bg-black/30 backdrop-blur-[2px] p-4 pb-10 animate-fade-in">
-      <div className="relative w-full max-w-2xl rounded-xl border border-white/15 bg-zinc-950 p-6 shadow-2xl text-white">
+    <div className="pointer-events-auto fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl border border-white/15 bg-zinc-950 p-6 shadow-2xl text-white">
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">

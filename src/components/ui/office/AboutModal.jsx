@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { NormieFaq } from "../NormieFaq.jsx";
 import { brandConfig } from "../../../config/brandConfig";
 import { officeStore } from "../../../context/useOfficeStore";
-import { X, Info, Briefcase, ExternalLink, Globe, ShieldCheck } from "lucide-react";
+import { StickyNoteBoard } from "./StickyNote.jsx";
+import { X, Info, Globe } from "lucide-react";
 
 export function AboutModal() {
   const board = brandConfig.content.projectBoard;
@@ -60,36 +61,12 @@ export function AboutModal() {
             </p>
           </div>
 
-          {/* Launch roadmap */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="font-serif text-lg font-bold text-white flex items-center gap-2">
-                <Briefcase className="h-4 w-4 text-purple-400" />
-                Launch Roadmap
-              </h3>
-              <span className="font-mono text-xs text-emerald-400">Milestone Tracker</span>
+            <div className="flex items-end justify-between gap-3">
+              <h3 className="font-serif text-lg font-bold text-white">Launch Roadmap</h3>
+              <span className="font-serif text-xs italic text-white/40">pinned to the wall</span>
             </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {board.projects.map((project) => (
-                <div
-                  key={project.id}
-                  className="rounded-xl border border-white/10 bg-white/[0.02] p-4 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex justify-between items-center text-[11px] font-mono text-white/40 mb-1.5">
-                      <span>{project.date}</span>
-                      <span className="text-emerald-400 font-bold">{project.revenue}</span>
-                    </div>
-                    <h4 className="font-serif text-sm font-bold text-white mb-1">{project.name}</h4>
-                    <p className="text-xs text-white/60 leading-relaxed">{project.description}</p>
-                  </div>
-                  <div className="mt-3 pt-2.5 border-t border-white/5 text-[11px] font-mono text-purple-300">
-                    ● {project.category}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <StickyNoteBoard projects={board.projects} />
           </div>
 
           {/* Interactive FAQ Section */}
