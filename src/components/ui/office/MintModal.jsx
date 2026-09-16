@@ -87,7 +87,7 @@ export function MintModal() {
         if (passes.length) setMyPasses(passes);
       });
     } catch (e) {
-      setError(e.message);
+      setError(e.message || "Mint failed");
     } finally {
       setLoading(false);
     }

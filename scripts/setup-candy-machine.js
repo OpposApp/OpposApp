@@ -8,7 +8,7 @@ loadEnvFiles();
  * Requires:
  *   MINT_AUTHORITY_SECRET  — base58-encoded 64-byte secret key
  *   SOLANA_RPC_URL or HELIUS_RPC_URL (never VITE_ for paid keys)
- *   TOKEN_MINT             — $OPPOS SPL mint (must exist; user ATAs need balance to mint)
+ *   TOKEN_MINT             — $OPPOS mint (SPL Token burn, or Token-2022 payment to burn sink)
  *   TREASURY_WALLET        — receives 0.2 SOL per mint
  *
  * Optional:
@@ -21,17 +21,26 @@ loadEnvFiles();
  * Run: npm run setup-candy-machine
  */
 import { createHash } from "crypto";
-import { Keypair } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey as Web3PublicKey, Transaction } from "@solana/web3.js";
+import {
+  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+  createAssociatedTokenAccountIdempotentInstruction,
+  getAssociatedTokenAddressSync,
+} from "@solana/spl-token";
 import bs58 from "bs58";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
-import { generateSigner, keypairIdentity, publicKey, some, sol } from "@metaplex-foundation/umi";
+import { generateSigner, keypairIdentity, none, publicKey, some, sol } from "@metaplex-foundation/umi";
 import { fromWeb3JsKeypair } from "@metaplex-foundation/umi-web3js-adapters";
-import { createCollection, mplCore, ruleSet } from "@metaplex-foundation/mpl-core";
+import { addCollectionPlugin, createCollection, mplCore, ruleSet } from "@metaplex-foundation/mpl-core";
 import {
   create,
   findCandyGuardPda,
   mplCandyMachine,
 } from "@metaplex-foundation/mpl-core-candy-machine";
+
+/** Token-2022 candy guard has payment, not burn. Tokens are sent here so they cannot return. */
+const INCINERATOR = "1nc1nerator11111111111111111111111111111111";
 
 const RPC = getRpcUrl();
 const ITEMS = Number(process.env.CANDY_ITEMS ?? 2222);
@@ -47,7 +56,17 @@ const COLLECTION_URI =
   "https://arweave.net/oppos-pass-collection-placeholder";
 
 function hiddenHash(name, uri) {
-  return createHash("sha256").update(JSON.stringify({ name, uri })).digest();
+  return new Uint8Array(createHash("sha256").update(JSON.stringify({ name, uri })).digest());
+}
+
+async function ensureUpdateDelegate(umi, collectionMint) {
+  await addCollectionPlugin(umi, {
+    collection: collectionMint,
+    plugin: {
+      type: "UpdateDelegate",
+      additionalDelegates: [],
+    },
+  }).sendAndConfirm(umi);
 }
 
 async function main() {
@@ -78,8 +97,49 @@ async function main() {
     .use(mplCandyMachine())
     .use(keypairIdentity(fromWeb3JsKeypair(web3Keypair)));
 
+  const connection = new Connection(RPC, "confirmed");
+  const mintPk = new Web3PublicKey(TOKEN_MINT);
+  const mintInfo = await connection.getAccountInfo(mintPk, "confirmed");
+  if (!mintInfo) {
+    throw new Error(`TOKEN_MINT ${TOKEN_MINT} does not exist on this RPC`);
+  }
+  const isToken2022 = mintInfo.owner.equals(TOKEN_2022_PROGRAM_ID);
+  const tokenProgram = isToken2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID;
+  const burnSink = (process.env.BURN_SINK_WALLET || INCINERATOR).trim();
+  const burnSinkPk = new Web3PublicKey(burnSink);
+  const burnAta = getAssociatedTokenAddressSync(mintPk, burnSinkPk, true, tokenProgram);
+
   console.log("Authority:", web3Keypair.publicKey.toBase58());
-  console.log("RPC:", RPC);
+  console.log("RPC:", RPC.includes("devnet") ? "devnet" : "mainnet");
+  console.log("TOKEN_MINT:", TOKEN_MINT, isToken2022 ? "(Token-2022)" : "(SPL Token)");
+  if (isToken2022) {
+    console.log("Guard: token2022Payment →", burnAta.toBase58(), `(owner ${burnSink})`);
+  } else {
+    console.log("Guard: tokenBurn", BURN_RAW.toString(), "raw");
+  }
+
+  if (isToken2022) {
+    const ataIx = createAssociatedTokenAccountIdempotentInstruction(
+      web3Keypair.publicKey,
+      burnAta,
+      burnSinkPk,
+      mintPk,
+      tokenProgram,
+    );
+    const ataTx = new Transaction().add(ataIx);
+    ataTx.feePayer = web3Keypair.publicKey;
+    const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash("confirmed");
+    ataTx.recentBlockhash = blockhash;
+    ataTx.sign(web3Keypair);
+    const ataSig = await connection.sendRawTransaction(ataTx.serialize(), {
+      skipPreflight: false,
+    });
+    await connection.confirmTransaction(
+      { signature: ataSig, blockhash, lastValidBlockHeight },
+      "confirmed",
+    );
+    console.log("Burn-sink ATA ready:", burnAta.toBase58());
+  }
 
   let collectionMint;
   const existingCollection = process.env.COLLECTION_MINT?.trim();
@@ -104,10 +164,26 @@ async function main() {
           creators: [{ address: publicKey(TREASURY), percentage: 100 }],
           ruleSet: ruleSet("None"),
         },
+        {
+          type: "UpdateDelegate",
+          additionalDelegates: [],
+        },
       ],
     }).sendAndConfirm(umi);
     collectionMint = collection.publicKey;
     console.log("   Collection:", collectionMint);
+  }
+
+  try {
+    await ensureUpdateDelegate(umi, collectionMint);
+    console.log("   UpdateDelegate plugin ready");
+  } catch (err) {
+    const msg = err?.message || String(err);
+    if (/already exists|plugin already/i.test(msg)) {
+      console.log("   UpdateDelegate already on collection");
+    } else {
+      throw err;
+    }
   }
 
   const candyMachine = generateSigner(umi);
@@ -119,20 +195,31 @@ async function main() {
     collectionUpdateAuthority: umi.identity,
     itemsAvailable: ITEMS,
     isMutable: true,
-    hiddenSettings: {
+    hiddenSettings: some({
       name: hiddenName,
       uri: PASS_URI,
       hash: hiddenHash(hiddenName, PASS_URI),
-    },
+    }),
+    configLineSettings: none(),
     guards: {
       solPayment: some({
         lamports: sol(MINT_SOL),
         destination: publicKey(TREASURY),
       }),
-      tokenBurn: some({
-        amount: BURN_RAW,
-        mint: publicKey(TOKEN_MINT),
-      }),
+      ...(isToken2022
+        ? {
+            token2022Payment: some({
+              amount: BURN_RAW,
+              mint: publicKey(TOKEN_MINT),
+              destinationAta: publicKey(burnAta.toBase58()),
+            }),
+          }
+        : {
+            tokenBurn: some({
+              amount: BURN_RAW,
+              mint: publicKey(TOKEN_MINT),
+            }),
+          }),
     },
   });
   await cmBuilder.sendAndConfirm(umi);
