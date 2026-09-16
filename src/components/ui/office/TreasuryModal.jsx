@@ -4,12 +4,12 @@ import { fetchSolBalanceLamports, lamportsToSol, solscanAccount } from "../../..
 import { isDevnetRpc } from "../../../lib/env.js";
 import {
   HOLDER_SPLIT_PERCENT,
-  PAYOUT_HOURS_UTC,
   PAYOUT_LABEL,
   PAYOUT_SCHEDULE_UTC,
   formatDurationHms,
   formatUtcHm,
   getNextPayoutDate,
+  getUpcomingPayoutDates,
   isTokenLive,
 } from "../../../lib/rewardsConfig.js";
 import { officeStore } from "../../../context/useOfficeStore";
@@ -74,8 +74,11 @@ export function TreasuryModal() {
 
   const tokenLive = isTokenLive();
   const nextPayout = useMemo(() => (tokenLive ? getNextPayoutDate(now) : null), [now, tokenLive]);
+  const upcomingMarks = useMemo(
+    () => (tokenLive ? getUpcomingPayoutDates(4, now) : []),
+    [now, tokenLive],
+  );
   const remainingMs = nextPayout ? Math.max(0, nextPayout.getTime() - now.getTime()) : 0;
-  const nextHour = nextPayout ? nextPayout.getUTCHours() : null;
   const treasury = config?.treasury_wallet;
   const treasuryReady = !isPlaceholderWallet(treasury);
 
@@ -144,18 +147,19 @@ export function TreasuryModal() {
               )}
             </p>
             <div className="mt-4 grid grid-cols-4 gap-1.5">
-              {PAYOUT_HOURS_UTC.map((hour) => {
-                const active = tokenLive && hour === nextHour;
+              {upcomingMarks.map((mark, index) => {
+                const active = index === 0;
                 return (
                   <div
-                    key={hour}
+                    key={mark.toISOString()}
                     className={`rounded-lg border px-1.5 py-1.5 text-center font-mono text-[10px] ${
                       active
                         ? "border-amber-400/50 bg-amber-400/15 text-amber-200"
                         : "border-white/10 bg-white/[0.03] text-white/35"
                     }`}
                   >
-                    {String(hour).padStart(2, "0")}:00
+                    {String(mark.getUTCHours()).padStart(2, "0")}:
+                    {String(mark.getUTCMinutes()).padStart(2, "0")}
                   </div>
                 );
               })}
@@ -175,7 +179,7 @@ export function TreasuryModal() {
             <p className="mt-4 text-[11px] leading-relaxed text-white/40">
               {HOLDER_SPLIT_PERCENT}% of creator fees is reserved for Pass holders each cycle.{" "}
               {tokenLive
-                ? "The payout job is not live yet — this clock tracks 00/06/12/18 UTC."
+                ? "The payout job is not live yet — this clock counts 6-hour marks from token live."
                 : "Countdown starts when $OPPOS goes live on pump.fun."}
             </p>
           </div>

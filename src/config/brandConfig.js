@@ -75,10 +75,11 @@ export const brandConfig = {
   },
 
   rewards: {
-    /** Holder SOL payout cadence (OTC-style clock, faster cycle) */
+    /** First countdown mark — 6 hours after token live (2026-09-17 06:45 UTC+7). */
+    firstPayoutAt: "2026-09-16T23:45:00.000Z",
     distributionIntervalHours: 6,
     holderSplitPercent: 50,
-    payoutScheduleUtc: "00:00 · 06:00 · 12:00 · 18:00 UTC",
+    payoutScheduleUtc: "Every 6 hours",
     payoutShort: "every 6 hours",
     payoutLabel: "6-Hour SOL Cycles",
     payoutDescription:

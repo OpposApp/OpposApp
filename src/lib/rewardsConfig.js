@@ -18,6 +18,13 @@ export function estimateIntervalUsd(dailyUsdPerPass, passesHeld, intervalHours =
 
 export const PAYOUT_HOURS_UTC = [0, 6, 12, 18];
 
+export const PAYOUT_EPOCH_MS = (() => {
+  const raw = rewards.firstPayoutAt;
+  if (!raw) return null;
+  const ms = Date.parse(raw);
+  return Number.isFinite(ms) ? ms : null;
+})();
+
 /** True once brandConfig.meta.contractAddress is a real mint, not "Soon". */
 export function isTokenLive(contractAddress = brandConfig.meta.contractAddress) {
   const value = String(contractAddress ?? "").trim();
@@ -27,11 +34,23 @@ export function isTokenLive(contractAddress = brandConfig.meta.contractAddress) 
   return value.length >= 32 && value.length <= 44;
 }
 
-/** Next 00/06/12/18 UTC payout instant. */
+/** Next payout instant: firstPayoutAt, then every `intervalHours` after that. */
 export function getNextPayoutDate(now = new Date(), intervalHours = DISTRIBUTION_INTERVAL_HOURS) {
   const slotMs = intervalHours * 60 * 60 * 1000;
   const t = now.getTime();
+  if (PAYOUT_EPOCH_MS != null) {
+    if (t < PAYOUT_EPOCH_MS) return new Date(PAYOUT_EPOCH_MS);
+    const elapsed = t - PAYOUT_EPOCH_MS;
+    const steps = Math.floor(elapsed / slotMs) + 1;
+    return new Date(PAYOUT_EPOCH_MS + steps * slotMs);
+  }
   return new Date(Math.floor(t / slotMs) * slotMs + slotMs);
+}
+
+export function getUpcomingPayoutDates(count = 4, now = new Date(), intervalHours = DISTRIBUTION_INTERVAL_HOURS) {
+  const slotMs = intervalHours * 60 * 60 * 1000;
+  const first = getNextPayoutDate(now, intervalHours);
+  return Array.from({ length: count }, (_, i) => new Date(first.getTime() + i * slotMs));
 }
 
 export function formatDurationHms(ms) {
