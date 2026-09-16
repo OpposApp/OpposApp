@@ -99,7 +99,7 @@ export async function distributeFeePool(poolAddress) {
   
   // 50% split → Pass Holders on a designed 6-hour clock (00/06/12/18 UTC)
   const holderShare = poolBalance * 0.5;
-  console.log(\`[OPPOS] 6h cycle (not live): would disburse \${holderShare / 1e9} SOL to verified holders.\`);
+  console.log(\`[OPPOS] 6h cycle (not live): would disburse \${holderShare / 1e9} SOL to verified Pass holders.\`);
   return { status: "SCHEDULED", amountSol: holderShare / 1e9 };
 }`,
       quickLinks: [

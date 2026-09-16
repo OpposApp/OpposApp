@@ -173,7 +173,7 @@ function getInteractionLabel(type) {
     case "painting":
       return "Press [E] to Hail";
     case "rewards":
-      return "Press [E] to View SOL Rewards & Calculator";
+      return "Press [E] to View Pass SOL Rewards";
     case "treasury":
       return "Press [E] to Open Treasury Vault";
     case "docs":

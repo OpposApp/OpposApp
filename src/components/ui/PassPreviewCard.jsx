@@ -22,7 +22,7 @@ export function PassPreviewCard({ serial = "0001", className = "" }) {
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-black/75 p-4">
         <p className="font-serif text-sm font-bold tracking-tight text-white">OPPOS PASS</p>
-        <p className="mt-0.5 font-mono text-[10px] text-white/50">2,222 max · 50% holder split</p>
+        <p className="mt-0.5 font-mono text-[10px] text-white/50">2,222 max · 50% Pass holder split</p>
       </div>
     </div>
   );

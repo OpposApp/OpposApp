@@ -115,7 +115,7 @@ export function MintModal() {
                 </span>
               </div>
               <p className="text-xs text-white/50 mt-0.5">
-                {maxSupply.toLocaleString()} max supply · 50% holder split designed · payout job not live
+                {maxSupply.toLocaleString()} max supply · 50% Pass holder split designed · payout job not live
               </p>
             </div>
           </div>

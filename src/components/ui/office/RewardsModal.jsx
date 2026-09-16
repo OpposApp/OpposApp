@@ -69,7 +69,7 @@ export function RewardsModal() {
                 </span>
               </div>
               <p className="text-xs text-white/50 mt-0.5">
-                {split.holder}% holder split designed · payout job not live yet
+                {split.holder}% Pass holder split designed · payout job not live yet
               </p>
             </div>
           </div>

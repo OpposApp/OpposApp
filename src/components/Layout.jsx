@@ -186,7 +186,7 @@ export function Layout() {
                 © {new Date().getFullYear()} Oppos Sweden AB
               </p>
               <p className="text-xs text-white/20 font-mono">
-                50% holder split · 6h clock · Solana
+                50% Pass holder split · 6h clock · payout not live
               </p>
             </div>
           </div>

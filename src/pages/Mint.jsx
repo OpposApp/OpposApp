@@ -172,7 +172,7 @@ export function MintPage() {
                   <span className="text-sm">◆</span>
                   <div>
                     <p className="text-sm font-serif font-bold text-white">You Receive</p>
-                    <p className="text-[11px] text-white/25 font-mono">50% revenue-share</p>
+                    <p className="text-[11px] text-white/25 font-mono">50% Pass holder share (designed)</p>
                   </div>
                 </div>
                 <span className="font-mono text-sm font-bold text-white">1 Pass NFT</span>

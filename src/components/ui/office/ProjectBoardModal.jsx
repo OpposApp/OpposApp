@@ -48,7 +48,7 @@ export function ProjectBoardModal() {
         <div className="mt-8 rounded-lg border border-indigo-500/20 bg-indigo-500/5 p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-sm font-semibold text-white">Join the launch — mint your revenue share</p>
-            <p className="text-xs text-white/50 mt-0.5">Hold an Oppos Pass for 50% of creator fees, paid in SOL every 6 hours.</p>
+            <p className="text-xs text-white/50 mt-0.5">Hold an Oppos Pass for a designed 50% share of creator fees in SOL. Payout job not live yet.</p>
           </div>
           <button
             type="button"

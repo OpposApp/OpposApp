@@ -30,7 +30,7 @@ export function EarningsCalculator() {
           Estimate Your SOL Yield
         </h3>
         <p className="text-sm text-white/35 max-w-xl">
-          Holders are designed to receive {HOLDER_SPLIT_PERCENT}% of creator trading fees in SOL {PAYOUT_SHORT}.
+          Pass holders are designed to receive {HOLDER_SPLIT_PERCENT}% of creator trading fees in SOL {PAYOUT_SHORT}.
           Estimate below is fully diluted across the 2,222 max supply. The payout job is not live yet.
         </p>
       </div>

@@ -29,6 +29,16 @@ const sections = [
     ],
     note: "* Designed split. Yield depends on trading volume, not a fixed APY. The automated payout job is not live yet.",
   },
+  {
+    title: "Metaplex Core Standard",
+    eyebrow: "Next-Gen Asset Architecture",
+    intro: "Built on Solana's lowest-overhead NFT standard:",
+    items: [
+      "85% cheaper mint and transfer network fees than legacy NFTs",
+      "Single-account architecture eliminating token account rent overhead",
+      "Native on-chain asset enforcement and verified collection tagging",
+    ],
+  },
 ];
 
 export function DocsPage() {

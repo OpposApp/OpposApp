@@ -18,14 +18,14 @@ const projects = [
     subtitle: "Helius DAS & Supabase",
     description:
       "Mint indexer writes Passes to Supabase. Holder snapshots on a 6-hour clock are designed; the payout job is not live yet.",
-    stats: { payout: "6h SOL", audit: "Solscan Hash" },
+    stats: { payout: "6h SOL", source: "On-chain" },
   },
   {
     id: "pump-fun-integration",
     title: "$OPPOS pump.fun Pool",
     subtitle: "Tokenomics & Liquidity",
     description:
-      "Direct integration with pump.fun bonding curve and Raydium. Creator fees are routed to the treasury for the holder split.",
+      "Direct integration with pump.fun bonding curve and Raydium. Creator fees are routed to the treasury for the Pass holder split. Payout job not live yet.",
     stats: { burn: `${burnDisplay} $OPPOS`, feeShare: "50% Pool" },
   },
   {
