@@ -22,7 +22,7 @@
   <img src="https://img.shields.io/badge/Pass_supply-2,222-111111?style=flat-square" alt="Supply" />
   <img src="https://img.shields.io/badge/Mint-0.2_SOL_+_22,222_burn-22c55e?style=flat-square" alt="Mint" />
   <img src="https://img.shields.io/badge/Holder_split-50%25-f59e0b?style=flat-square" alt="Split" />
-  <img src="https://img.shields.io/badge/CA-Soon-6b7280?style=flat-square" alt="Contract" />
+  <img src="https://img.shields.io/badge/CA-Live-22c55e?style=flat-square" alt="Contract" />
 </p>
 
 ---
@@ -31,7 +31,7 @@ Walk the studio. Sit at the desk. Open the treasury chest. Mint from the termina
 
 OPPOS is a React + Three.js dApp: a lock-mouse office you can actually use, wired to a Metaplex Core Candy Machine. One Pass is one equal share of **50% of $OPPOS creator fees**, designed to pay out in SOL on a 6-hour clock.
 
-**Token contract: Soon.** Payout job is designed, not live yet.
+**Token contract:** [`Ay25n6nkFGib2qXLsbqAPhiU81ubuEvDWyVksECRpump`](https://pump.fun/coin/Ay25n6nkFGib2qXLsbqAPhiU81ubuEvDWyVksECRpump). Payout job is designed, not live yet.
 
 ## Economics
 
@@ -89,8 +89,8 @@ flowchart LR
 | 3D office | Shipped |
 | Pass mint (devnet) | Working |
 | Mint indexer | Code ready — run `index-mints:watch` |
-| $OPPOS CA | Soon |
-| Mainnet Candy Machine | After CA |
+| $OPPOS CA | `Ay25n6nkFGib2qXLsbqAPhiU81ubuEvDWyVksECRpump` |
+| Mainnet Candy Machine | Not deployed yet |
 | 6h SOL payouts | Designed — job not live |
 
 This repo is product source. It is not an audit report.
@@ -119,4 +119,4 @@ Mainnet Candy Machine deploy requires `ALLOW_MAINNET_DEPLOY=1`. Do not run that 
 - Site — [oppos.app](https://oppos.app)
 - X — [x.com/OpposApp](https://x.com/OpposApp)
 - Source — [github.com/OpposApp/OpposApp](https://github.com/OpposApp/OpposApp)
-- Contract — Soon
+- Contract — [`Ay25n6nkFGib2qXLsbqAPhiU81ubuEvDWyVksECRpump`](https://solscan.io/token/Ay25n6nkFGib2qXLsbqAPhiU81ubuEvDWyVksECRpump)

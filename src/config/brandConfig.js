@@ -11,7 +11,7 @@ export const brandConfig = {
       github: "https://github.com/OpposApp/OpposApp",
       email: "hello@oppos.app",
     },
-    contractAddress: "Soon",
+    contractAddress: "Ay25n6nkFGib2qXLsbqAPhiU81ubuEvDWyVksECRpump",
   },
 
   theme: {
@@ -117,8 +117,8 @@ export async function distributeFeePool(poolAddress) {
           id: "milestone-1",
           name: "$OPPOS Token Launch",
           category: "Token · pump.fun",
-          status: "Upcoming",
-          revenue: "Soon",
+          status: "Completed",
+          revenue: "Live",
           date: "Phase 0",
           description: "Fair launch on pump.fun with creator-fee routing wired to the holder revenue pool.",
         },
